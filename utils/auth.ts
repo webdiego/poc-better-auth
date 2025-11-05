@@ -24,7 +24,7 @@ export const auth = betterAuth({
     sendOnSignUp: true,
 
     sendVerificationEmail: async ({ user, url }) => {
-      const verifyUrl = url + "profile";
+      const verifyUrl = url + "dashboard";
       try {
         const emailHtml = await render(
           EmailTemplate({ name: user.name, url: verifyUrl })

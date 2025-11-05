@@ -69,7 +69,7 @@ export default function SignIn() {
           setLoading(false);
           toast.success("Success");
           setTimeout(() => {
-            router.push("/profile");
+            router.push("/dashboard");
           }, 2000);
         },
         onError: (ctx) => {
