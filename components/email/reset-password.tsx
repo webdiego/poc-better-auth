@@ -3,40 +3,36 @@ import {
   Button,
   Container,
   Head,
-  Heading,
   Html,
   Preview,
   Section,
   Text,
 } from "@react-email/components";
 
-interface EmailTemplateProps {
+interface ResetPasswordProps {
   name: string;
   url: string;
 }
 
-export const EmailTemplate = ({ name, url }: EmailTemplateProps) => {
+export const ResetPassword = ({ name, url }: ResetPasswordProps) => {
   return (
     <Html>
       <Head />
-      <Preview>Verify your email address</Preview>
+      <Preview>Reset password</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Section style={header}>
-            <Heading style={heading}>Welcome!</Heading>
-          </Section>
-
           <Section style={content}>
             <Text style={paragraph}>
               Hi <strong>{name}</strong>,
             </Text>
             <Text style={paragraph}>
-              Thank you for signing up! To complete your registration and verify
-              your email address, click the button below:
+              We received a request to reset the password for your account
+              associated with webdiegomassarini@gmail.com. If you made this
+              request, click the button below to reset your password:
             </Text>
 
             <Button style={button} href={url}>
-              Verify Email
+              Reset Password
             </Button>
 
             <Text style={footerText}>
@@ -47,7 +43,7 @@ export const EmailTemplate = ({ name, url }: EmailTemplateProps) => {
 
           <Section style={footer}>
             <Text style={footerText}>
-              If you didn’t request this registration, you can safely ignore
+              If you didn’t request this reset password, you can safely ignore
               this email.
             </Text>
             <Text style={footerText}>
@@ -71,19 +67,6 @@ const container = {
   maxWidth: "600px",
 };
 
-const header = {
-  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-  padding: "40px 20px",
-  textAlign: "center" as const,
-  borderRadius: "8px 8px 0 0",
-};
-
-const heading = {
-  color: "#ffffff",
-  fontSize: "28px",
-  margin: "0",
-};
-
 const content = {
   backgroundColor: "#ffffff",
   padding: "40px 30px",
@@ -99,13 +82,13 @@ const paragraph = {
 const button = {
   backgroundColor: "#667eea",
   color: "#ffffff",
-  padding: "14px 40px",
+  padding: "12px 20px",
   borderRadius: "6px",
-  fontSize: "16px",
+  fontSize: "14px",
   fontWeight: "bold",
   textDecoration: "none",
   display: "inline-block",
-  margin: "20px 0",
+  margin: "15px 0",
 };
 
 const footerText = {
@@ -117,7 +100,7 @@ const footerText = {
 
 const link = {
   color: "#667eea",
-  fontSize: "14px",
+  fontSize: "12px",
   wordBreak: "break-all" as const,
 };
 

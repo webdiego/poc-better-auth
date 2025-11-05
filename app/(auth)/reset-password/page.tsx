@@ -25,39 +25,47 @@ import {
 import { Field, FieldDescription } from "@/components/ui/field";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type SignInTypes = {
-  email: string;
   password: string;
+  confirmPassword: string;
 };
 
 const signInSchema = z.object({
-  email: z.email({
-    message: "Please enter a valid email address.",
-  }),
   password: z.string().min(8, {
+    message: "The password must contain at least 8 characters.",
+  }),
+  confirmPassword: z.string().min(8, {
     message: "The password must contain at least 8 characters.",
   }),
 });
 
-export default function SignUpPage() {
+export default function ResetPassword() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token") as string;
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
   const onSubmit = async (values: SignInTypes) => {
-    await authClient.signIn.email(
+    if (values.password !== values.confirmPassword) {
+      toast.error("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
+    await authClient.resetPassword(
       {
-        email: values.email,
-        password: values.password,
+        newPassword: values.password,
+        token,
       },
       {
         onRequest: () => {
@@ -65,17 +73,15 @@ export default function SignUpPage() {
         },
         onSuccess: () => {
           setLoading(false);
-          toast.success("Success");
+          toast.success("Password reset");
           setTimeout(() => {
-            router.push("/profile");
-          }, 2000);
+            router.push("/sign-in");
+          }, 1000);
         },
         onError: (ctx) => {
           setLoading(false);
 
-          toast.error(ctx.error.message, {
-            description: "Check your email and confirm your account",
-          });
+          toast.error(ctx.error.message);
         },
       }
     );
@@ -85,7 +91,7 @@ export default function SignUpPage() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="bg-white rounded-2xl w-full max-w-md px-2 py-8">
         <CardHeader>
-          <CardTitle className="text-lg">Sign in to your account</CardTitle>
+          <CardTitle className="text-lg">Reset passoword</CardTitle>
           <CardDescription>
             Enter your email below to login to your account
           </CardDescription>
@@ -93,24 +99,6 @@ export default function SignUpPage() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="name@example.com"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
               <FormField
                 control={form.control}
                 name="password"
@@ -125,11 +113,24 @@ export default function SignUpPage() {
                       />
                     </FormControl>
                     <FormMessage />
-                    <Link href={"/forgot-password"}>
-                      <p className="text-xs text-right underline text-gray-600">
-                        Forgot password?
-                      </p>
-                    </Link>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="The password must contain at least 8 characters."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -137,7 +138,7 @@ export default function SignUpPage() {
               <Field>
                 <Button disabled={loading} type="submit">
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  {loading ? "Sign in..." : "Sign in"}
+                  {loading ? "Request..." : "Request"}
                 </Button>
 
                 <FieldDescription className="text-center">

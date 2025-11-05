@@ -25,39 +25,32 @@ import {
 import { Field, FieldDescription } from "@/components/ui/field";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 type SignInTypes = {
   email: string;
-  password: string;
 };
 
 const signInSchema = z.object({
   email: z.email({
     message: "Please enter a valid email address.",
   }),
-  password: z.string().min(8, {
-    message: "The password must contain at least 8 characters.",
-  }),
 });
 
-export default function SignUpPage() {
-  const router = useRouter();
+export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
   const onSubmit = async (values: SignInTypes) => {
-    await authClient.signIn.email(
+    await authClient.forgetPassword(
       {
         email: values.email,
-        password: values.password,
+        redirectTo: "/reset-password",
       },
       {
         onRequest: () => {
@@ -65,17 +58,13 @@ export default function SignUpPage() {
         },
         onSuccess: () => {
           setLoading(false);
-          toast.success("Success");
-          setTimeout(() => {
-            router.push("/profile");
-          }, 2000);
+
+          toast.success("Password reset email sent");
         },
         onError: (ctx) => {
           setLoading(false);
 
-          toast.error(ctx.error.message, {
-            description: "Check your email and confirm your account",
-          });
+          toast.error(ctx.error.message);
         },
       }
     );
@@ -111,33 +100,10 @@ export default function SignUpPage() {
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="The password must contain at least 8 characters."
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                    <Link href={"/forgot-password"}>
-                      <p className="text-xs text-right underline text-gray-600">
-                        Forgot password?
-                      </p>
-                    </Link>
-                  </FormItem>
-                )}
-              />
-
               <Field>
                 <Button disabled={loading} type="submit">
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  {loading ? "Sign in..." : "Sign in"}
+                  {loading ? "Request..." : "Request"}
                 </Button>
 
                 <FieldDescription className="text-center">
