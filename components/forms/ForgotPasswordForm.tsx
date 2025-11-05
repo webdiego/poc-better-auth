@@ -38,6 +38,7 @@ const signInSchema = z.object({
 
 export default function ForgotPasswordForm() {
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(signInSchema),
@@ -57,8 +58,7 @@ export default function ForgotPasswordForm() {
           setLoading(true);
         },
         onSuccess: () => {
-          setLoading(false);
-
+          setDisabled(true);
           toast.success("Password reset email sent");
         },
         onError: (ctx) => {
@@ -101,7 +101,7 @@ export default function ForgotPasswordForm() {
               />
 
               <Field>
-                <Button disabled={loading} type="submit">
+                <Button disabled={loading || disabled} type="submit">
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   {loading ? "Request..." : "Request"}
                 </Button>

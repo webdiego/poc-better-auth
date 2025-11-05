@@ -44,6 +44,7 @@ const signInSchema = z.object({
 export default function SignIn() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(signInSchema),
@@ -64,6 +65,7 @@ export default function SignIn() {
           setLoading(true);
         },
         onSuccess: () => {
+          setDisabled(true);
           setLoading(false);
           toast.success("Success");
           setTimeout(() => {
@@ -135,7 +137,7 @@ export default function SignIn() {
               />
 
               <Field>
-                <Button disabled={loading} type="submit">
+                <Button disabled={loading || disabled} type="submit">
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   {loading ? "Sign in..." : "Sign in"}
                 </Button>

@@ -46,7 +46,7 @@ export default function ResetPasswordForm() {
   const token = searchParams.get("token") as string;
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
+  const [disabled, setDisabled] = useState(false);
   const form = useForm({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -73,6 +73,7 @@ export default function ResetPasswordForm() {
         },
         onSuccess: () => {
           setLoading(false);
+          setDisabled(true);
           toast.success("Password reset");
           setTimeout(() => {
             router.push("/sign-in");
@@ -136,7 +137,7 @@ export default function ResetPasswordForm() {
               />
 
               <Field>
-                <Button disabled={loading} type="submit">
+                <Button disabled={loading || disabled} type="submit">
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   {loading ? "Reset..." : "Reset"}
                 </Button>

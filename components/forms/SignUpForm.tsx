@@ -46,6 +46,7 @@ const signUpSchema = z.object({
 
 export default function SignUpPage() {
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(signUpSchema),
@@ -68,6 +69,7 @@ export default function SignUpPage() {
           setLoading(true);
         },
         onSuccess: () => {
+          setDisabled(true);
           setLoading(false);
           toast.success("Account created!", {
             description: "Please check your email to verify your account.",
@@ -145,7 +147,7 @@ export default function SignUpPage() {
               />
 
               <Field>
-                <Button disabled={loading} type="submit">
+                <Button disabled={loading || disabled} type="submit">
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   {loading ? "Sign up..." : "Sign up"}
                 </Button>
