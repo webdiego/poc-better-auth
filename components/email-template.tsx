@@ -19,39 +19,39 @@ export const EmailTemplate = ({ name, url }: EmailTemplateProps) => {
   return (
     <Html>
       <Head />
-      <Preview>Verifica il tuo indirizzo email</Preview>
+      <Preview>Verify your email address</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={header}>
-            <Heading style={heading}>Benvenuto!</Heading>
+            <Heading style={heading}>Welcome!</Heading>
           </Section>
 
           <Section style={content}>
             <Text style={paragraph}>
-              Ciao <strong>{name}</strong>,
+              Hi <strong>{name}</strong>,
             </Text>
             <Text style={paragraph}>
-              Grazie per esserti registrato! Per completare la registrazione e
-              verificare il tuo indirizzo email, clicca sul pulsante qui sotto:
+              Thank you for signing up! To complete your registration and verify
+              your email address, click the button below:
             </Text>
 
             <Button style={button} href={url}>
-              Verifica Email
+              Verify Email
             </Button>
 
             <Text style={footerText}>
-              Oppure copia e incolla questo link nel tuo browser:
+              Or copy and paste this link into your browser:
             </Text>
             <Text style={link}>{url}</Text>
           </Section>
 
           <Section style={footer}>
             <Text style={footerText}>
-              Se non hai richiesto questa registrazione, puoi ignorare questa
-              email.
+              If you didn’t request this registration, you can safely ignore
+              this email.
             </Text>
             <Text style={footerText}>
-              © {new Date().getFullYear()} - Tutti i diritti riservati
+              © {new Date().getFullYear()} - All rights reserved
             </Text>
           </Section>
         </Container>

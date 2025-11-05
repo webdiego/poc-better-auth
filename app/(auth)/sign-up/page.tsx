@@ -69,7 +69,9 @@ export default function SignUpPage() {
         },
         onSuccess: () => {
           setLoading(false);
-          toast.success("Success! Control your email");
+          toast.success("Account created!", {
+            description: "Please check your email to verify your account.",
+          });
         },
         onError: (ctx) => {
           console.log(signUpError);
