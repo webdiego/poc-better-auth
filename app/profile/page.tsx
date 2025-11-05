@@ -2,11 +2,10 @@ import { headers } from "next/headers";
 import { auth } from "@/utils/auth";
 import SignOut from "@/components/SignOut";
 
-const session = await auth.api.getSession({
-  headers: await headers(),
-});
-
 export default async function Profile() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   console.log(session);
   const user = session?.user;
   return (
