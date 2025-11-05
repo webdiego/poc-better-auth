@@ -93,9 +93,7 @@ export default function ResetPasswordForm() {
       <Card className="bg-white rounded-2xl w-full max-w-md px-2 py-8">
         <CardHeader>
           <CardTitle className="text-lg">Reset passoword</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
+          <CardDescription>Enter your new passoword</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>

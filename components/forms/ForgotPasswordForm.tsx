@@ -59,6 +59,7 @@ export default function ForgotPasswordForm() {
         },
         onSuccess: () => {
           setDisabled(true);
+          setLoading(false);
           toast.success("Password reset email sent");
         },
         onError: (ctx) => {
@@ -74,9 +75,9 @@ export default function ForgotPasswordForm() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="bg-white rounded-2xl w-full max-w-md px-2 py-8">
         <CardHeader>
-          <CardTitle className="text-lg">Sign in to your account</CardTitle>
+          <CardTitle className="text-lg">Forgot your password?</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your email below and get a reset password email
           </CardDescription>
         </CardHeader>
         <CardContent>
