@@ -115,7 +115,7 @@ export default function SignUpPage() {
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder="nome@esempio.com"
+                        placeholder="name@example.com"
                         {...field}
                       />
                     </FormControl>
@@ -133,7 +133,7 @@ export default function SignUpPage() {
                     <FormControl>
                       <Input
                         type="password"
-                        placeholder="Minimo 8 caratteri"
+                        placeholder="The password must contain at least 8 characters."
                         {...field}
                       />
                     </FormControl>
