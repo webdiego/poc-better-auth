@@ -26,6 +26,7 @@ import { Field, FieldDescription } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import ButtonGithub from "@/components/ButtonGithub";
 
 type SignUpTypes = {
   name: string;
@@ -47,6 +48,12 @@ const signUpSchema = z.object({
 export default function SignUpPage() {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
+
+  const signInGithub = async () => {
+    await authClient.signIn.social({
+      provider: "github",
+    });
+  };
 
   const form = useForm({
     resolver: zodResolver(signUpSchema),
@@ -96,6 +103,7 @@ export default function SignUpPage() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+              <ButtonGithub text="Sign up with GitHub" onClick={signInGithub} />
               <FormField
                 control={form.control}
                 name="name"

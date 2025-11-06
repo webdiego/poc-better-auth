@@ -26,6 +26,7 @@ import { Field, FieldDescription } from "@/components/ui/field";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import ButtonGithub from "@/components/ButtonGithub";
 
 type SignInTypes = {
   email: string;
@@ -53,7 +54,11 @@ export default function SignIn() {
       password: "",
     },
   });
-
+  const signInGithub = async () => {
+    await authClient.signIn.social({
+      provider: "github",
+    });
+  };
   const onSubmit = async (values: SignInTypes) => {
     await authClient.signIn.email(
       {
@@ -95,6 +100,7 @@ export default function SignIn() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+              <ButtonGithub text="Sign in with GitHub" onClick={signInGithub} />
               <FormField
                 control={form.control}
                 name="email"
